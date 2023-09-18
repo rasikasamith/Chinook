@@ -30,6 +30,10 @@ public partial class ChinookContext : IdentityDbContext<ChinookUser>
     public virtual DbSet<Track> Tracks { get; set; } = null!;
     public virtual DbSet<UserPlaylist> UserPlaylists { get; set; } = null!;
 
+    //Added by Rasika Samith
+    public virtual DbSet<PlaylistTrack> PlaylistTracks { get; set; }
+    public virtual DbSet<TrackFavorite> TrackFavorites { get; set; }
+
     protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
     {
         if (!optionsBuilder.IsConfigured)
@@ -285,7 +289,24 @@ public partial class ChinookContext : IdentityDbContext<ChinookUser>
                 .HasForeignKey(up => up.PlaylistId);
         });
 
-        OnModelCreatingPartial(modelBuilder);
+        //Added by Rasika Samith       
+		modelBuilder.Entity<PlaylistTrack>().HasKey(am => new
+		{
+			am.PlaylistId,
+			am.TrackId
+		});
+		modelBuilder.Entity<PlaylistTrack>().HasOne(m => m.Playlist).WithMany(am => am.PlaylistTracks).HasForeignKey(m => m.PlaylistId);
+		modelBuilder.Entity<PlaylistTrack>().HasOne(m => m.Track).WithMany(am => am.PlaylistTracks).HasForeignKey(m => m.TrackId);
+
+        modelBuilder.Entity<TrackFavorite>().HasKey(tf => new
+        {
+            tf.UserId,
+            tf.TrackId
+        });
+
+		modelBuilder.Entity<TrackFavorite>().HasOne(t => t.Track).WithMany(tf => tf.TrackFavorites).HasForeignKey(t => t.TrackId);
+
+		OnModelCreatingPartial(modelBuilder);
 
         base.OnModelCreating(modelBuilder);
     }

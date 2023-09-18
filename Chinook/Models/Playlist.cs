@@ -16,5 +16,7 @@ namespace Chinook.Models
         public virtual ICollection<Track> Tracks { get; set; }
         public virtual ICollection<UserPlaylist> UserPlaylists { get; set; }
 
-    }
+		//Added by Rasika Samith 
+		public List<PlaylistTrack> PlaylistTracks { get; set; }
+	}
 }

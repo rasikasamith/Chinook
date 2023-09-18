@@ -1,0 +1,19 @@
+﻿@using Chinook.Models;
+<div>
+<input class="form-control" placeholder="Search..." @bind="searchItem" />
+<button class="form-control" onclick="OnSearchClicked()">Search</button>
+</div>
+@code {
+	[Parameter]
+	public List<Artist> Artists { get; set; }
+
+	[Parameter]
+	public EventCallback<Artist> OnSearch { get; set; }
+
+	private Artist searchItem;
+
+	private async Task OnSearchClicked()
+	{
+		await OnSearch.InvokeAsync(searchItem);
+	}
+}
