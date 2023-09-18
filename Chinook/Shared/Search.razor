@@ -1,0 +1,23 @@
+﻿@using Chinook.Models;
+
+<div class="d-flex mb-4">
+	<div class="form-outline me-3" style="width: 14rem">	
+		<input type="text" class="form-control mb-2 mr-sm-2" placeholder="Search by name" @bind="searchItem">
+	</div>
+	<button class="btn btn-primary mr-sm-2 mb-2" @onclick="OnSearchClicked">Search</button>
+</div>
+
+@code {
+	[Parameter]
+	public EventCallback<string> OnSearch { get; set; }
+
+	private string searchItem;
+
+	private async Task OnSearchClicked()
+	{
+		await OnSearch.InvokeAsync(searchItem);
+	}
+}
+
+
+

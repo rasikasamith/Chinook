@@ -3,6 +3,7 @@ using System;
 using Chinook;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -10,9 +11,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Chinook.Migrations
 {
     [DbContext(typeof(ChinookContext))]
-    partial class ChinookContextModelSnapshot : ModelSnapshot
+    [Migration("20230917072705_AddTrackFavorite")]
+    partial class AddTrackFavorite
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder.HasAnnotation("ProductVersion", "7.0.8");
@@ -391,8 +394,6 @@ namespace Chinook.Migrations
 
                     b.HasKey("UserId", "TrackId");
 
-                    b.HasIndex("TrackId");
-
                     b.ToTable("TrackFavorites");
                 });
 
@@ -654,17 +655,6 @@ namespace Chinook.Migrations
                     b.Navigation("MediaType");
                 });
 
-            modelBuilder.Entity("Chinook.Models.TrackFavorite", b =>
-                {
-                    b.HasOne("Chinook.Models.Track", "Track")
-                        .WithMany("TrackFavorites")
-                        .HasForeignKey("TrackId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("Track");
-                });
-
             modelBuilder.Entity("Chinook.Models.UserPlaylist", b =>
                 {
                     b.HasOne("Chinook.Models.Playlist", "Playlist")
@@ -802,8 +792,6 @@ namespace Chinook.Migrations
                     b.Navigation("InvoiceLines");
 
                     b.Navigation("PlaylistTracks");
-
-                    b.Navigation("TrackFavorites");
                 });
 #pragma warning restore 612, 618
         }

@@ -27,5 +27,10 @@ namespace Chinook.Models
         public virtual ICollection<InvoiceLine> InvoiceLines { get; set; }
 
         public virtual ICollection<Playlist> Playlists { get; set; }
-    }
+
+		//Added by Rasika Samith 
+		public List<PlaylistTrack> PlaylistTracks { get; set; }
+		public List<TrackFavorite> TrackFavorites { get; set; }
+		public string UserId { get; internal set; }
+	}
 }
